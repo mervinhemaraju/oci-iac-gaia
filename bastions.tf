@@ -1,5 +1,5 @@
 resource "oci_bastion_bastion" "private_web_01" {
-  bastion_type     = "standard"
+  bastion_type     = "STANDARD"
   compartment_id   = data.doppler_secrets.prod_main.map.OCI_GAIA_COMPARTMENT_PRODUCTION_ID
   target_subnet_id = oci_core_subnet.private_web_01.id
 
@@ -12,7 +12,7 @@ resource "oci_bastion_bastion" "private_web_01" {
 }
 
 resource "oci_bastion_bastion" "private_web_02" {
-  bastion_type     = "standard"
+  bastion_type     = "STANDARD"
   compartment_id   = data.doppler_secrets.prod_main.map.OCI_GAIA_COMPARTMENT_PRODUCTION_ID
   target_subnet_id = oci_core_subnet.private_web_02.id
 

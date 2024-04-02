@@ -19,7 +19,7 @@ resource "oci_core_instance" "web_01" {
 
   create_vnic_details {
     subnet_id              = oci_core_subnet.private_web_01.id
-    assign_public_ip       = true
+    assign_public_ip       = false
     private_ip             = local.networking.ip_address.web_01
     skip_source_dest_check = true
   }
@@ -59,7 +59,7 @@ resource "oci_core_instance" "web_02" {
 
   create_vnic_details {
     subnet_id              = oci_core_subnet.private_web_02.id
-    assign_public_ip       = true
+    assign_public_ip       = false
     private_ip             = local.networking.ip_address.web_02
     skip_source_dest_check = true
   }
