@@ -34,7 +34,7 @@ locals {
     compute = {
 
       shape = "VM.Standard.A1.Flex"
-      image = "ocid1.image.oc1.af-johannesburg-1.aaaaaaaascxwbn7sovafprhcbtehiipbc56aidb5jvkoatl4gigpeqlgmaxa"
+      image = "ocid1.image.oc1.af-johannesburg-1.aaaaaaaab6h3wgwbgy5q65yrccdsgsrcphcrq2obqri2loilxlg5qozzqxoq"
 
       web_01 = {
         name = "web-01"
