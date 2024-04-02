@@ -6,6 +6,8 @@ resource "oci_bastion_bastion" "private_web_01" {
   max_session_ttl_in_seconds = 10800
   name                       = "jump-private-web-01"
 
+  client_cidr_block_allow_list = ["0.0.0.0/0"]
+
   freeform_tags = local.tags.defaults
 }
 
@@ -16,6 +18,8 @@ resource "oci_bastion_bastion" "private_web_02" {
 
   max_session_ttl_in_seconds = 10800
   name                       = "jump-private-web-02"
+
+  client_cidr_block_allow_list = ["0.0.0.0/0"]
 
   freeform_tags = local.tags.defaults
 }
