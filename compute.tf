@@ -30,6 +30,13 @@ resource "oci_core_instance" "web_01" {
     boot_volume_size_in_gbs = "100"
   }
 
+  agent_config {
+    plugins_config {
+      desired_state = "ENABLED"
+      name          = "Bastion"
+    }
+  }
+
 
   freeform_tags = local.tags.defaults
 
@@ -68,6 +75,13 @@ resource "oci_core_instance" "web_02" {
     source_type             = "image"
     source_id               = local.values.compute.image
     boot_volume_size_in_gbs = "100"
+  }
+
+  agent_config {
+    plugins_config {
+      desired_state = "ENABLED"
+      name          = "Bastion"
+    }
   }
 
   metadata = {
