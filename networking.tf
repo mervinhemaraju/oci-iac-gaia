@@ -31,7 +31,7 @@ resource "oci_core_subnet" "public_web" {
 
   depends_on = [
     oci_core_vcn.web,
-    oci_core_security_list.web_main
+    oci_core_security_list.public_web
   ]
 }
 
@@ -52,7 +52,7 @@ resource "oci_core_subnet" "private_web_01" {
 
   depends_on = [
     oci_core_vcn.web,
-    oci_core_security_list.web_main
+    oci_core_security_list.private_web
   ]
 }
 
@@ -72,6 +72,6 @@ resource "oci_core_subnet" "private_web_02" {
 
   depends_on = [
     oci_core_vcn.web,
-    oci_core_security_list.web_main
+    oci_core_security_list.private_web
   ]
 }
