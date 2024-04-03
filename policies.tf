@@ -1,5 +1,5 @@
 resource "oci_identity_policy" "administrators_load_balancers" {
-  compartment_id = data.doppler_secrets.prod_main.map.OCI_GAIA_COMPARTMENT_PRODUCTION_ID
+  compartment_id = data.doppler_secrets.prod_main.map.OCI_GAIA_COMPARTMENT_ROOT_ID
   description    = "Allow Administrators to manage load balancers"
   name           = "allow-administrators-manage-load-balancers"
 
