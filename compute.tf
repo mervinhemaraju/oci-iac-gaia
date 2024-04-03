@@ -35,6 +35,18 @@ resource "oci_core_instance" "web_01" {
       desired_state = "ENABLED"
       name          = "Bastion"
     }
+    plugins_config {
+      desired_state = "ENABLED"
+      name          = "OS Management Service Agent"
+    }
+    plugins_config {
+      desired_state = "ENABLED"
+      name          = "Compute Instance Run Command"
+    }
+    plugins_config {
+      desired_state = "ENABLED"
+      name          = "Compute Instance Monitoring"
+    }
   }
 
 
@@ -81,6 +93,18 @@ resource "oci_core_instance" "web_02" {
     plugins_config {
       desired_state = "ENABLED"
       name          = "Bastion"
+    }
+    plugins_config {
+      desired_state = "ENABLED"
+      name          = "OS Management Service Agent"
+    }
+    plugins_config {
+      desired_state = "ENABLED"
+      name          = "Compute Instance Run Command"
+    }
+    plugins_config {
+      desired_state = "ENABLED"
+      name          = "Compute Instance Monitoring"
     }
   }
 
