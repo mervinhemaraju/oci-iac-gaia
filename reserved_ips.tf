@@ -16,4 +16,10 @@ resource "oci_core_public_ip" "web_nlb" {
   display_name = "res-web-nlb"
 
   freeform_tags = local.tags.defaults
+
+  lifecycle {
+    ignore_changes = [
+      private_ip_id
+    ]
+  }
 }

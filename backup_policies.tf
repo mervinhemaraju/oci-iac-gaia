@@ -10,7 +10,7 @@ resource "oci_core_volume_backup_policy" "weekly" {
     period            = "ONE_WEEK"
     retention_seconds = 691200 # 8 days
 
-    day_of_week = "SUNDAY"
+    day_of_week = "SATURDAY"
     hour_of_day = 1
     time_zone   = "UTC"
   }
