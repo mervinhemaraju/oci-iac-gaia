@@ -63,7 +63,7 @@ resource "oci_core_route_table" "private_web" {
       network_entity_id = route_rules.value["id"]
 
       description      = "Route to web-01"
-      destination      = local.networking.cidr.subnets.private_web_01
+      destination      = local.networking.cidr.subnets.private_web
       destination_type = "CIDR_BLOCK"
     }
   }
@@ -75,7 +75,7 @@ resource "oci_core_route_table" "private_web" {
       network_entity_id = route_rules.value["id"]
 
       description      = "Route to web-02"
-      destination      = local.networking.cidr.subnets.private_web_02
+      destination      = local.networking.cidr.subnets.private_web
       destination_type = "CIDR_BLOCK"
     }
   }
