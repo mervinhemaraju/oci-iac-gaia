@@ -7,11 +7,11 @@ resource "oci_core_security_list" "private_web" {
 
   egress_security_rules {
 
-    destination      = "0.0.0.0/0"
+    destination      = local.networking.cidr.vcn.web
     destination_type = "CIDR_BLOCK"
     protocol         = "all"
 
-    description = "Outbound internet traffic"
+    description = "Allow all traffic for the vcn's cidr block."
 
   }
 

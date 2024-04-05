@@ -10,7 +10,7 @@ provider "oci" {
   user_ocid    = data.doppler_secrets.prod_main.map.OCI_GAIA_USER_OCID
   fingerprint  = data.doppler_secrets.prod_main.map.OCI_GAIA_FINGERPRINT
   private_key  = data.doppler_secrets.prod_main.map.OCI_GAIA_PRIVATE_KEY
-  region       = "af-johannesburg-1"
+  region       = var.region
 }
 
 # * The Terraform Module

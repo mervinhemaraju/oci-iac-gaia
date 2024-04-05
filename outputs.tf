@@ -4,7 +4,6 @@ output "web_nsg_reserved_ip" {
   value = oci_core_public_ip.web_nlb.ip_address
 }
 
-
 # Output the public IP for NAT gateway public ip
 output "nat_gateway_public_ip" {
   value = oci_core_public_ip.prod_nat.ip_address
