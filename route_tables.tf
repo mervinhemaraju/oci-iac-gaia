@@ -47,14 +47,6 @@ resource "oci_core_route_table" "private_web" {
   vcn_id         = oci_core_vcn.web.id
 
   display_name = "route-table-private-web-01"
-  # route_rules {
-
-  #   network_entity_id = oci_core_nat_gateway.prod.id
-
-  #   description      = "Route to the NAT Gateway (Internet Access)"
-  #   destination      = "0.0.0.0/0"
-  #   destination_type = "CIDR_BLOCK"
-  # }
 
   dynamic "route_rules" {
     for_each = data.oci_core_private_ips.web_01.private_ips
@@ -63,7 +55,7 @@ resource "oci_core_route_table" "private_web" {
       network_entity_id = route_rules.value["id"]
 
       description      = "Route to web-01"
-      destination      = local.networking.cidr.subnets.private_web
+      destination      = format("%s/32", route_rules.value["ip_address"])
       destination_type = "CIDR_BLOCK"
     }
   }
@@ -75,7 +67,7 @@ resource "oci_core_route_table" "private_web" {
       network_entity_id = route_rules.value["id"]
 
       description      = "Route to web-02"
-      destination      = local.networking.cidr.subnets.private_web
+      destination      = format("%s/32", route_rules.value["ip_address"])
       destination_type = "CIDR_BLOCK"
     }
   }
