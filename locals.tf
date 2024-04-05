@@ -19,14 +19,13 @@ locals {
       }
 
       subnets = {
-        public_web     = "10.15.100.0/24"
-        private_web_01 = "10.15.1.0/24"
-        private_web_02 = "10.15.2.0/24"
+        public_web  = "10.15.100.0/24"
+        private_web = "10.15.1.0/24"
       }
     }
     ip_address = {
       web_01 = "10.15.1.10"
-      web_02 = "10.15.2.10"
+      web_02 = "10.15.1.20"
     }
   }
 
@@ -43,6 +42,25 @@ locals {
       web_02 = {
         name = "web-02"
       }
+
+      plugins_config = [
+        {
+          name          = "Bastion"
+          desired_state = "ENABLED"
+        },
+        {
+          name          = "OS Management Service Agent"
+          desired_state = "ENABLED"
+        },
+        {
+          name          = "Compute Instance Run Command"
+          desired_state = "ENABLED"
+        },
+        {
+          name          = "Compute Instance Monitoring"
+          desired_state = "ENABLED"
+        }
+      ]
     }
   }
 }

@@ -18,7 +18,7 @@ resource "oci_core_instance" "web_01" {
   }
 
   create_vnic_details {
-    subnet_id              = oci_core_subnet.private_web_01.id
+    subnet_id              = oci_core_subnet.public_web.id
     assign_public_ip       = false
     private_ip             = local.networking.ip_address.web_01
     skip_source_dest_check = true
@@ -26,29 +26,19 @@ resource "oci_core_instance" "web_01" {
 
   source_details {
     source_type             = "image"
-    source_id               = local.values.compute.image
+    source_id               = data.oci_core_images.oracle_linux.images[0].id
     boot_volume_size_in_gbs = "100"
   }
 
   agent_config {
-    plugins_config {
-      desired_state = "ENABLED"
-      name          = "Bastion"
-    }
-    plugins_config {
-      desired_state = "ENABLED"
-      name          = "OS Management Service Agent"
-    }
-    plugins_config {
-      desired_state = "ENABLED"
-      name          = "Compute Instance Run Command"
-    }
-    plugins_config {
-      desired_state = "ENABLED"
-      name          = "Compute Instance Monitoring"
+    dynamic "plugins_config" {
+      for_each = local.values.compute.plugins_config
+      content {
+        desired_state = plugins_config.value.desired_state
+        name          = plugins_config.value.name
+      }
     }
   }
-
 
   freeform_tags = local.tags.defaults
 
@@ -77,7 +67,7 @@ resource "oci_core_instance" "web_02" {
   }
 
   create_vnic_details {
-    subnet_id              = oci_core_subnet.private_web_02.id
+    subnet_id              = oci_core_subnet.public_web.id
     assign_public_ip       = false
     private_ip             = local.networking.ip_address.web_02
     skip_source_dest_check = true
@@ -85,26 +75,17 @@ resource "oci_core_instance" "web_02" {
 
   source_details {
     source_type             = "image"
-    source_id               = local.values.compute.image
+    source_id               = data.oci_core_images.oracle_linux.images[0].id
     boot_volume_size_in_gbs = "100"
   }
 
   agent_config {
-    plugins_config {
-      desired_state = "ENABLED"
-      name          = "Bastion"
-    }
-    plugins_config {
-      desired_state = "ENABLED"
-      name          = "OS Management Service Agent"
-    }
-    plugins_config {
-      desired_state = "ENABLED"
-      name          = "Compute Instance Run Command"
-    }
-    plugins_config {
-      desired_state = "ENABLED"
-      name          = "Compute Instance Monitoring"
+    dynamic "plugins_config" {
+      for_each = local.values.compute.plugins_config
+      content {
+        desired_state = plugins_config.value.desired_state
+        name          = plugins_config.value.name
+      }
     }
   }
 
