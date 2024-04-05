@@ -15,30 +15,6 @@ resource "oci_core_route_table" "public_web" {
     destination_type = "CIDR_BLOCK"
   }
 
-  # dynamic "route_rules" {
-  #   for_each = data.oci_core_private_ips.web_02.private_ips
-  #   content {
-
-  #     network_entity_id = route_rules.value["id"]
-
-  #     description      = "Route to web-02"
-  #     destination      = local.networking.cidr.subnets.private_web_02
-  #     destination_type = "CIDR_BLOCK"
-  #   }
-  # }
-
-  # dynamic "route_rules" {
-  #   for_each = data.oci_core_private_ips.web_01.private_ips
-  #   content {
-
-  #     network_entity_id = route_rules.value["id"]
-
-  #     description      = "Route to web-01"
-  #     destination      = local.networking.cidr.subnets.private_web_01
-  #     destination_type = "CIDR_BLOCK"
-  #   }
-  # }
-
   freeform_tags = local.tags.defaults
 }
 

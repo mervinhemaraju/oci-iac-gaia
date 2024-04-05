@@ -24,7 +24,7 @@ resource "oci_core_subnet" "public_web" {
   display_name               = "public-web"
   dns_label                  = "publicweb"
   prohibit_public_ip_on_vnic = false
-  security_list_ids          = [oci_core_vcn.web.default_security_list_id, oci_core_security_list.public_web.id]
+  security_list_ids          = [oci_core_security_list.public_web.id]
 
   freeform_tags = local.tags.defaults
 
@@ -44,7 +44,7 @@ resource "oci_core_subnet" "private_web" {
   display_name               = "private-web"
   dns_label                  = "privateweb"
   prohibit_public_ip_on_vnic = false
-  security_list_ids          = [oci_core_vcn.web.default_security_list_id, oci_core_security_list.private_web.id]
+  security_list_ids          = [oci_core_security_list.private_web.id]
 
   freeform_tags = local.tags.defaults
 
