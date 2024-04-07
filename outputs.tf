@@ -15,7 +15,7 @@ output "web_01_private_ip" {
 }
 
 # Output the public IP for web-01
-output "web_01_private_ip" {
+output "web_01_public_ip" {
   value = oci_core_instance.web_01.public_ip
 }
 
@@ -25,6 +25,6 @@ output "web_02_private_ip" {
 }
 
 # Output the public IP for web-02
-output "web_02_private_ip" {
+output "web_02_public_ip" {
   value = oci_core_instance.web_02.public_ip
 }
