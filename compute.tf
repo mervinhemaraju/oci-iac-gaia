@@ -26,7 +26,7 @@ resource "oci_core_instance" "web_01" {
 
   source_details {
     source_type             = "image"
-    source_id               = data.oci_core_images.oracle_linux.images[0].id
+    source_id               = local.values.compute.image
     boot_volume_size_in_gbs = "100"
   }
 
@@ -75,7 +75,7 @@ resource "oci_core_instance" "web_02" {
 
   source_details {
     source_type             = "image"
-    source_id               = data.oci_core_images.oracle_linux.images[0].id
+    source_id               = local.values.compute.image
     boot_volume_size_in_gbs = "100"
   }
 
