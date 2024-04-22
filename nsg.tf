@@ -35,7 +35,7 @@ resource "oci_core_network_security_group_security_rule" "https" {
   direction                 = "INGRESS"
   protocol                  = 6 # TCP
 
-  description = "Enable HTTP traffic"
+  description = "Enable HTTPS traffic"
   source      = "0.0.0.0/0"
   source_type = "CIDR_BLOCK"
   stateless   = false

@@ -28,15 +28,13 @@ resource "oci_network_load_balancer_backend_set" "https" {
 
     protocol = "HTTP"
 
-    interval_in_millis = 10000
-    port               = 80
-    # request_data        = var.backend_set_health_checker_request_data
-    # response_body_regex = var.backend_set_health_checker_response_body_regex
-    # response_data       = var.backend_set_health_checker_response_data
-    retries           = 3
-    return_code       = 200
-    timeout_in_millis = 3000
-    url_path          = "/health"
+    interval_in_millis  = 10000
+    port                = 80
+    response_body_regex = "OK"
+    retries             = 3
+    return_code         = 200
+    timeout_in_millis   = 3000
+    url_path            = "/health"
   }
 
   is_preserve_source = true

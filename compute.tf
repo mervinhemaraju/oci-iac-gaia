@@ -94,4 +94,3 @@ resource "oci_core_instance" "web_02" {
   }
 
 }
-
