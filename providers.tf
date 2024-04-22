@@ -16,11 +16,15 @@ provider "oci" {
 # * The Terraform Module
 terraform {
 
+  # * The required tf version
+  required_version = "1.4.0"
+
   # * Required providers
   required_providers {
 
     doppler = {
-      source = "DopplerHQ/doppler"
+      source  = "DopplerHQ/doppler"
+      version = "1.7.0"
     }
     oci = {
       source  = "oracle/oci"
