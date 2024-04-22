@@ -22,7 +22,7 @@ data "oci_core_vnic_attachments" "web_01" {
 }
 
 data "oci_core_private_ips" "web_01" {
-  vnic_id    = lookup(data.oci_core_vnic_attachments.web_01.vnic_attachments[0], "vnic_id")
+  vnic_id    = lookup(data.oci_core_vnic_attachments.web_01.vnic_attachments[0], "vnic_id", null)
   depends_on = [oci_core_instance.web_01]
 }
 
@@ -35,6 +35,6 @@ data "oci_core_vnic_attachments" "web_02" {
 }
 
 data "oci_core_private_ips" "web_02" {
-  vnic_id    = lookup(data.oci_core_vnic_attachments.web_02.vnic_attachments[0], "vnic_id")
+  vnic_id    = lookup(data.oci_core_vnic_attachments.web_02.vnic_attachments[0], "vnic_id", null)
   depends_on = [oci_core_instance.web_02]
 }
