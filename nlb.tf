@@ -5,7 +5,7 @@ resource "oci_network_load_balancer_network_load_balancer" "web" {
   display_name                   = "web"
   subnet_id                      = oci_core_subnet.public_web.id
   freeform_tags                  = local.tags.defaults
-  is_preserve_source_destination = true
+  is_preserve_source_destination = false
   is_private                     = false
   network_security_group_ids = [
     oci_core_network_security_group.web.id
@@ -37,7 +37,7 @@ resource "oci_network_load_balancer_backend_set" "https" {
     url_path            = "/health"
   }
 
-  is_preserve_source = true
+  is_preserve_source = false
 }
 
 # NSG Backends
