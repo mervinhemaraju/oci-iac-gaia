@@ -1,6 +1,6 @@
 resource "oci_core_volume_group" "web" {
 
-  compartment_id      = local.values.compartments_helios.production
+  compartment_id      = local.values.compartments.production
   availability_domain = data.oci_identity_availability_domain.this.name
 
   display_name = "web-volumes"

@@ -10,13 +10,13 @@ data "oci_identity_availability_domain" "this" {
 # Gets the fault domains from this AZ
 data "oci_identity_fault_domains" "this" {
 
-  compartment_id      = local.values.compartments_helios.production
+  compartment_id      = local.values.compartments.production
   availability_domain = data.oci_identity_availability_domain.this.name
 }
 
 data "oci_core_vnic_attachments" "web_01" {
 
-  compartment_id      = local.values.compartments_helios.production
+  compartment_id      = local.values.compartments.production
   availability_domain = data.oci_identity_availability_domain.this.name
   instance_id         = oci_core_instance.web_01.id
 
@@ -30,7 +30,7 @@ data "oci_core_private_ips" "web_01" {
 
 data "oci_core_vnic_attachments" "web_02" {
 
-  compartment_id      = local.values.compartments_helios.production
+  compartment_id      = local.values.compartments.production
   availability_domain = data.oci_identity_availability_domain.this.name
   instance_id         = oci_core_instance.web_02.id
 

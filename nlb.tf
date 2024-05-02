@@ -2,7 +2,7 @@
 # Create a network load balancer for web servers
 resource "oci_network_load_balancer_network_load_balancer" "web" {
 
-  compartment_id                 = local.values.compartments_helios.production
+  compartment_id                 = local.values.compartments.production
   display_name                   = "web"
   subnet_id                      = oci_core_subnet.public_web.id
   freeform_tags                  = local.tags.defaults

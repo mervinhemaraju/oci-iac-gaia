@@ -15,7 +15,8 @@ locals {
 
     cidr = {
       vcn = {
-        web = "10.15.0.0/16"
+        web      = "10.15.0.0/16"
+        database = "10.16.0.0/16"
       }
 
       subnets = {
