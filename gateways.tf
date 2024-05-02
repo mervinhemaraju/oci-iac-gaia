@@ -1,6 +1,6 @@
 # Create a main Internet gateway for the compartment
 resource "oci_core_internet_gateway" "prod" {
-  compartment_id = data.doppler_secrets.prod_main.map.OCI_GAIA_COMPARTMENT_PRODUCTION_ID
+  compartment_id = local.values.compartments.production
   vcn_id         = oci_core_vcn.web.id
 
   enabled      = true
@@ -11,7 +11,7 @@ resource "oci_core_internet_gateway" "prod" {
 
 # Create a main NAT gateway for the compartment
 resource "oci_core_nat_gateway" "prod" {
-  compartment_id = data.doppler_secrets.prod_main.map.OCI_GAIA_COMPARTMENT_PRODUCTION_ID
+  compartment_id = local.values.compartments.production
   vcn_id         = oci_core_vcn.web.id
 
   display_name = "prod-nat"

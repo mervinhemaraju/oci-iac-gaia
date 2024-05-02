@@ -1,7 +1,7 @@
 # Route Tables
 
 resource "oci_core_route_table" "public_web" {
-  compartment_id = data.doppler_secrets.prod_main.map.OCI_GAIA_COMPARTMENT_PRODUCTION_ID
+  compartment_id = local.values.compartments.production
   vcn_id         = oci_core_vcn.web.id
 
   display_name = "route-table-public-web"
@@ -15,14 +15,23 @@ resource "oci_core_route_table" "public_web" {
     destination_type = "CIDR_BLOCK"
   }
 
+  route_rules {
+
+    network_entity_id = data.oci_core_drgs.database.drgs[0].id
+
+    description      = "Route to the database vcn (Helios VCN peering via DRG)"
+    destination      = "10.16.0.0/16"
+    destination_type = "CIDR_BLOCK"
+  }
+
   freeform_tags = local.tags.defaults
 }
 
-resource "oci_core_route_table" "private_web" {
-  compartment_id = data.doppler_secrets.prod_main.map.OCI_GAIA_COMPARTMENT_PRODUCTION_ID
+resource "oci_core_route_table" "private_mgmt" {
+  compartment_id = local.values.compartments.production
   vcn_id         = oci_core_vcn.web.id
 
-  display_name = "route-table-private-web-01"
+  display_name = "route-table-private-mgmt-01"
 
   dynamic "route_rules" {
     for_each = data.oci_core_private_ips.web_01.private_ips
@@ -59,7 +68,7 @@ resource "oci_core_route_table_attachment" "public_web" {
   route_table_id = oci_core_route_table.public_web.id
 }
 
-resource "oci_core_route_table_attachment" "private_web" {
-  subnet_id      = oci_core_subnet.private_web.id
-  route_table_id = oci_core_route_table.private_web.id
+resource "oci_core_route_table_attachment" "private_mgmt" {
+  subnet_id      = oci_core_subnet.private_mgmt.id
+  route_table_id = oci_core_route_table.private_mgmt.id
 }

@@ -1,5 +1,5 @@
 resource "oci_core_volume_backup_policy" "weekly" {
-  compartment_id = data.doppler_secrets.prod_main.map.OCI_GAIA_COMPARTMENT_PRODUCTION_ID
+  compartment_id = local.values.compartments.production
 
   display_name  = "weekly-backups"
   freeform_tags = local.tags.defaults
@@ -18,9 +18,9 @@ resource "oci_core_volume_backup_policy" "weekly" {
 
 resource "oci_core_volume_group_backup" "web" {
 
-  volume_group_id = oci_core_volume_group.web.id
+  compartment_id = local.values.compartments.production
 
-  compartment_id = data.doppler_secrets.prod_main.map.OCI_GAIA_COMPARTMENT_PRODUCTION_ID
+  volume_group_id = oci_core_volume_group.web.id
 
   display_name  = "web-volumes-backup"
   freeform_tags = local.tags.defaults

@@ -15,12 +15,13 @@ locals {
 
     cidr = {
       vcn = {
-        web = "10.15.0.0/16"
+        web      = "10.15.0.0/16"
+        database = "10.16.0.0/16"
       }
 
       subnets = {
-        public_web  = "10.15.100.0/24"
-        private_web = "10.15.1.0/24"
+        public_web   = "10.15.100.0/24"
+        private_mgmt = "10.15.1.0/24"
       }
     }
     ip_address = {
@@ -30,6 +31,20 @@ locals {
   }
 
   values = {
+
+    tenancy = data.doppler_secrets.prod_main.map.OCI_GAIA_TENANCY_OCID
+    compartments = {
+      production = data.doppler_secrets.prod_main.map.OCI_GAIA_COMPARTMENT_PRODUCTION_ID
+      root       = data.doppler_secrets.prod_main.map.OCI_GAIA_COMPARTMENT_ROOT_ID
+    }
+
+    tenancy_helios = data.doppler_secrets.prod_main.map.OCI_HELIOS_TENANCY_OCID
+
+    compartments_helios = {
+      production = data.doppler_secrets.prod_main.map.OCI_HELIOS_COMPARTMENT_PRODUCTION_ID
+      root       = data.doppler_secrets.prod_main.map.OCI_HELIOS_COMPARTMENT_ROOT_ID
+    }
+
     compute = {
 
       shape = "VM.Standard.A1.Flex"
