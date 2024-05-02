@@ -54,3 +54,8 @@ data "oci_identity_groups" "drg_admins_helios" {
   name           = "drg-admins"
 }
 
+data "oci_core_drgs" "database" {
+  provider = oci.helios
+
+  compartment_id = local.values.compartments_helios.production
+}
