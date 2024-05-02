@@ -30,6 +30,12 @@ locals {
   }
 
   values = {
+
+    tenancy = data.doppler_secrets.prod_main.map.OCI_POSEIDON_TENANCY_OCID
+    compartments = {
+      production = data.doppler_secrets.prod_main.map.OCI_POSEIDON_COMPARTMENT_PRODUCTION_ID
+      root       = data.doppler_secrets.prod_main.map.OCI_POSEIDON_COMPARTMENT_ROOT_ID
+    }
     compute = {
 
       shape = "VM.Standard.A1.Flex"
