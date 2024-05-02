@@ -44,3 +44,13 @@ data "oci_identity_users" "main_admin" {
   compartment_id = local.values.compartments.root
   name           = "Mervin Hemaraju"
 }
+
+# > CROSS ACCOUNT Data Sources < #
+data "oci_identity_groups" "drg_admins_helios" {
+
+  provider = oci.helios
+
+  compartment_id = local.values.compartments_helios.root
+  name           = "drg-admins"
+}
+
