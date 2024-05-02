@@ -15,6 +15,15 @@ resource "oci_core_route_table" "public_web" {
     destination_type = "CIDR_BLOCK"
   }
 
+  route_rules {
+
+    network_entity_id = data.oci_core_drgs.database.drgs[0].id
+
+    description      = "Route to the database vcn (Helios VCN peering via DRG)"
+    destination      = "10.16.0.0/16"
+    destination_type = "CIDR_BLOCK"
+  }
+
   freeform_tags = local.tags.defaults
 }
 
