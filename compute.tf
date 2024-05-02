@@ -2,9 +2,8 @@
 
 # Create a compute instance for web-01
 resource "oci_core_instance" "web_01" {
-
+  compartment_id      = local.values.compartments.production
   availability_domain = data.oci_identity_availability_domain.this.name
-  compartment_id      = data.doppler_secrets.prod_main.map.OCI_GAIA_COMPARTMENT_PRODUCTION_ID
   fault_domain        = data.oci_identity_fault_domains.this.fault_domains[0].name
 
   display_name = local.values.compute.web_01.name
@@ -50,9 +49,9 @@ resource "oci_core_instance" "web_01" {
 
 # Create a compute instance for web-02
 resource "oci_core_instance" "web_02" {
+  compartment_id = local.values.compartments.production
 
   availability_domain = data.oci_identity_availability_domain.this.name
-  compartment_id      = data.doppler_secrets.prod_main.map.OCI_GAIA_COMPARTMENT_PRODUCTION_ID
   fault_domain        = data.oci_identity_fault_domains.this.fault_domains[1].name
 
   display_name = local.values.compute.web_02.name

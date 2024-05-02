@@ -1,6 +1,6 @@
 # Creates a zero spend budget
 resource "oci_budget_budget" "oci_zero_spend_budget" {
-  compartment_id = data.doppler_secrets.prod_main.map.OCI_GAIA_COMPARTMENT_ROOT_ID
+  compartment_id = local.values.compartments.root
   amount         = 1
   reset_period   = "MONTHLY"
 
@@ -8,7 +8,7 @@ resource "oci_budget_budget" "oci_zero_spend_budget" {
   display_name = "zero-spend-budget"
   target_type  = "COMPARTMENT"
   targets = [
-    data.doppler_secrets.prod_main.map.OCI_GAIA_COMPARTMENT_PRODUCTION_ID
+    local.values.compartments.production
   ]
 
   freeform_tags = local.tags.defaults

@@ -1,6 +1,7 @@
 resource "oci_core_volume_group" "web" {
+
+  compartment_id      = local.values.compartments_helios.production
   availability_domain = data.oci_identity_availability_domain.this.name
-  compartment_id      = data.doppler_secrets.prod_main.map.OCI_GAIA_COMPARTMENT_PRODUCTION_ID
 
   display_name = "web-volumes"
 

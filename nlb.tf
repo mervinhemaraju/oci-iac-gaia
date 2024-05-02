@@ -1,7 +1,8 @@
 
 # Create a network load balancer for web servers
 resource "oci_network_load_balancer_network_load_balancer" "web" {
-  compartment_id                 = data.doppler_secrets.prod_main.map.OCI_GAIA_COMPARTMENT_PRODUCTION_ID
+
+  compartment_id                 = local.values.compartments_helios.production
   display_name                   = "web"
   subnet_id                      = oci_core_subnet.public_web.id
   freeform_tags                  = local.tags.defaults
