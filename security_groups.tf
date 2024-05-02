@@ -1,9 +1,9 @@
-resource "oci_core_security_list" "private_web" {
+resource "oci_core_security_list" "private_mgmt" {
 
   compartment_id = data.doppler_secrets.prod_main.map.OCI_GAIA_COMPARTMENT_PRODUCTION_ID
   vcn_id         = oci_core_vcn.web.id
 
-  display_name = "private-web-sl"
+  display_name = "private-mgmt-sl"
 
   egress_security_rules {
 

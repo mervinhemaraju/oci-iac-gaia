@@ -35,21 +35,21 @@ resource "oci_core_subnet" "public_web" {
 }
 
 # Create a private subnet
-resource "oci_core_subnet" "private_web" {
+resource "oci_core_subnet" "private_mgmt" {
 
-  cidr_block     = local.networking.cidr.subnets.private_web
+  cidr_block     = local.networking.cidr.subnets.private_mgmt
   compartment_id = data.doppler_secrets.prod_main.map.OCI_GAIA_COMPARTMENT_PRODUCTION_ID
   vcn_id         = oci_core_vcn.web.id
 
-  display_name               = "private-web"
-  dns_label                  = "privateweb"
-  prohibit_public_ip_on_vnic = false
-  security_list_ids          = [oci_core_security_list.private_web.id]
+  display_name               = "private-mgmt"
+  dns_label                  = "privatemgmt"
+  prohibit_public_ip_on_vnic = true
+  security_list_ids          = [oci_core_security_list.private_mgmt.id]
 
   freeform_tags = local.tags.defaults
 
   depends_on = [
     oci_core_vcn.web,
-    oci_core_security_list.private_web
+    oci_core_security_list.private_mgmt
   ]
 }

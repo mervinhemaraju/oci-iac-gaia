@@ -19,8 +19,8 @@ locals {
       }
 
       subnets = {
-        public_web  = "10.15.100.0/24"
-        private_web = "10.15.1.0/24"
+        public_web   = "10.15.100.0/24"
+        private_mgmt = "10.15.1.0/24"
       }
     }
     ip_address = {
