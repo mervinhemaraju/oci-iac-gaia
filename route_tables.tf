@@ -15,14 +15,14 @@ resource "oci_core_route_table" "public_web" {
     destination_type = "CIDR_BLOCK"
   }
 
-  route_rules {
+  # route_rules {
 
-    network_entity_id = data.oci_core_drgs.database.drgs[0].id
+  #   network_entity_id = data.oci_core_drgs.database.drgs[0].id
 
-    description      = "Route to the database vcn (Helios VCN peering via DRG)"
-    destination      = "10.16.0.0/16"
-    destination_type = "CIDR_BLOCK"
-  }
+  #   description      = "Route to the database vcn (Helios VCN peering via DRG)"
+  #   destination      = "10.16.0.0/16"
+  #   destination_type = "CIDR_BLOCK"
+  # }
 
   freeform_tags = local.tags.defaults
 }
@@ -45,17 +45,17 @@ resource "oci_core_route_table" "private_mgmt" {
     }
   }
 
-  dynamic "route_rules" {
-    for_each = data.oci_core_private_ips.web_02.private_ips
-    content {
+  # dynamic "route_rules" {
+  #   for_each = data.oci_core_private_ips.web_02.private_ips
+  #   content {
 
-      network_entity_id = route_rules.value["id"]
+  #     network_entity_id = route_rules.value["id"]
 
-      description      = "Route to web-02"
-      destination      = format("%s/32", route_rules.value["ip_address"])
-      destination_type = "CIDR_BLOCK"
-    }
-  }
+  #     description      = "Route to web-02"
+  #     destination      = format("%s/32", route_rules.value["ip_address"])
+  #     destination_type = "CIDR_BLOCK"
+  #   }
+  # }
 
   freeform_tags = local.tags.defaults
 }

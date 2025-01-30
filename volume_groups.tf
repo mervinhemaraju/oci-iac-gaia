@@ -9,7 +9,7 @@ resource "oci_core_volume_group" "web" {
     type = "volumeIds"
     volume_ids = [
       oci_core_instance.web_01.boot_volume_id,
-      oci_core_instance.web_02.boot_volume_id,
+      # oci_core_instance.web_02.boot_volume_id,
     ]
   }
   freeform_tags = local.tags.defaults

@@ -28,19 +28,19 @@ data "oci_core_private_ips" "web_01" {
   depends_on = [oci_core_instance.web_01]
 }
 
-data "oci_core_vnic_attachments" "web_02" {
+# data "oci_core_vnic_attachments" "web_02" {
 
-  compartment_id      = local.values.compartments.production
-  availability_domain = data.oci_identity_availability_domain.this.name
-  instance_id         = oci_core_instance.web_02.id
+#   compartment_id      = local.values.compartments.production
+#   availability_domain = data.oci_identity_availability_domain.this.name
+#   instance_id         = oci_core_instance.web_02.id
 
-  depends_on = [oci_core_instance.web_02]
-}
+#   depends_on = [oci_core_instance.web_02]
+# }
 
-data "oci_core_private_ips" "web_02" {
-  vnic_id    = lookup(data.oci_core_vnic_attachments.web_02.vnic_attachments[0], "vnic_id", null)
-  depends_on = [oci_core_instance.web_02]
-}
+# data "oci_core_private_ips" "web_02" {
+#   vnic_id    = lookup(data.oci_core_vnic_attachments.web_02.vnic_attachments[0], "vnic_id", null)
+#   depends_on = [oci_core_instance.web_02]
+# }
 
 # Get the main admin user
 data "oci_identity_users" "main_admin" {
@@ -49,15 +49,15 @@ data "oci_identity_users" "main_admin" {
 }
 
 # > CROSS ACCOUNT Data Sources < #
-data "oci_identity_groups" "drg_admins_helios" {
+# data "oci_identity_groups" "drg_admins_helios" {
 
-  compartment_id = local.values.compartments_helios.root
+#   compartment_id = local.values.compartments_helios.root
 
-  provider = oci.helios
-  name     = "drg-admins"
-}
+#   provider = oci.helios
+#   name     = "drg-admins"
+# }
 
-data "oci_core_drgs" "database" {
-  compartment_id = local.values.compartments_helios.production
-  provider       = oci.helios
-}
+# data "oci_core_drgs" "database" {
+#   compartment_id = local.values.compartments_helios.production
+#   provider       = oci.helios
+# }
