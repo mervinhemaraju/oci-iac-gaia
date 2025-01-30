@@ -63,14 +63,14 @@ resource "oci_core_security_list" "public_web" {
     description = "Allow all traffic for the web vcn's cidr block."
   }
 
-  ingress_security_rules {
+  # ingress_security_rules {
 
-    source      = local.networking.cidr.vcn.database
-    source_type = "CIDR_BLOCK"
-    protocol    = "all"
+  #   source      = local.networking.cidr.vcn.database
+  #   source_type = "CIDR_BLOCK"
+  #   protocol    = "all"
 
-    description = "Allow all traffic for the database vcn's cidr block."
-  }
+  #   description = "Allow all traffic for the database vcn's cidr block."
+  # }
 
   ingress_security_rules {
 

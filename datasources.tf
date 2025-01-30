@@ -49,15 +49,15 @@ data "oci_identity_users" "main_admin" {
 }
 
 # > CROSS ACCOUNT Data Sources < #
-data "oci_identity_groups" "drg_admins_helios" {
+# data "oci_identity_groups" "drg_admins_helios" {
 
-  compartment_id = local.values.compartments_helios.root
+#   compartment_id = local.values.compartments_helios.root
 
-  provider = oci.helios
-  name     = "drg-admins"
-}
+#   provider = oci.helios
+#   name     = "drg-admins"
+# }
 
-data "oci_core_drgs" "database" {
-  compartment_id = local.values.compartments_helios.production
-  provider       = oci.helios
-}
+# data "oci_core_drgs" "database" {
+#   compartment_id = local.values.compartments_helios.production
+#   provider       = oci.helios
+# }
