@@ -11,9 +11,9 @@ resource "oci_core_instance" "web_01" {
   shape = local.values.compute.shape
 
   shape_config {
-    memory_in_gbs = 12
-    ocpus         = 3
-    vcpus         = 3
+    memory_in_gbs = 18
+    ocpus         = 2
+    vcpus         = 2
   }
 
   create_vnic_details {
@@ -60,9 +60,9 @@ resource "oci_core_instance" "web_02" {
 
 
   shape_config {
-    memory_in_gbs = 12
-    ocpus         = 1
-    vcpus         = 1
+    memory_in_gbs = 6
+    ocpus         = 2
+    vcpus         = 2
   }
 
   create_vnic_details {
