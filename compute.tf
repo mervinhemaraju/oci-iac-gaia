@@ -11,9 +11,9 @@ resource "oci_core_instance" "web_01" {
   shape = local.values.compute.shape
 
   shape_config {
-    memory_in_gbs = 18
-    ocpus         = 2
-    vcpus         = 2
+    memory_in_gbs = 24
+    ocpus         = 4
+    vcpus         = 4
   }
 
   create_vnic_details {
@@ -26,7 +26,7 @@ resource "oci_core_instance" "web_01" {
   source_details {
     source_type             = "image"
     source_id               = local.values.compute.image
-    boot_volume_size_in_gbs = "100"
+    boot_volume_size_in_gbs = "200"
   }
 
   agent_config {
