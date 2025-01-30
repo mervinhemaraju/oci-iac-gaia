@@ -12,8 +12,8 @@ resource "oci_core_instance" "web_01" {
 
   shape_config {
     memory_in_gbs = 12
-    ocpus         = 2
-    vcpus         = 2
+    ocpus         = 3
+    vcpus         = 3
   }
 
   create_vnic_details {
@@ -61,8 +61,8 @@ resource "oci_core_instance" "web_02" {
 
   shape_config {
     memory_in_gbs = 12
-    ocpus         = 2
-    vcpus         = 2
+    ocpus         = 1
+    vcpus         = 1
   }
 
   create_vnic_details {
