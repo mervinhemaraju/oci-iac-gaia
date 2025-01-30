@@ -45,17 +45,17 @@ resource "oci_core_route_table" "private_mgmt" {
     }
   }
 
-  dynamic "route_rules" {
-    for_each = data.oci_core_private_ips.web_02.private_ips
-    content {
+  # dynamic "route_rules" {
+  #   for_each = data.oci_core_private_ips.web_02.private_ips
+  #   content {
 
-      network_entity_id = route_rules.value["id"]
+  #     network_entity_id = route_rules.value["id"]
 
-      description      = "Route to web-02"
-      destination      = format("%s/32", route_rules.value["ip_address"])
-      destination_type = "CIDR_BLOCK"
-    }
-  }
+  #     description      = "Route to web-02"
+  #     destination      = format("%s/32", route_rules.value["ip_address"])
+  #     destination_type = "CIDR_BLOCK"
+  #   }
+  # }
 
   freeform_tags = local.tags.defaults
 }
