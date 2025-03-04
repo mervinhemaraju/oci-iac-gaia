@@ -1,6 +1,7 @@
 /**
 * Mandatory variables
 **/
+
 variable "region" {
   type        = string
   description = "The region where the resources will be created."
@@ -26,6 +27,7 @@ variable "bucket_region" {
   type        = string
   description = "The region of the bucket."
 }
+
 /**
 * End of Mandatory variables
 **/
