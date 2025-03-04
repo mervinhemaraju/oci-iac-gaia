@@ -26,7 +26,6 @@ variable "bucket_region" {
   type        = string
   description = "The region of the bucket."
 }
-
 /**
 * End of Mandatory variables
 **/
