@@ -16,8 +16,8 @@ locals {
 
     cidr = {
       vcn = {
-        mgmt     = "10.200.0.0/16"
-        database = "10.18.0.0.16"
+        mgmt     = "10.200.100.0/24"
+        database = "10.18.0.0/16"
       }
       subnets = {
         private_mgmt = "10.200.100.0/28"
