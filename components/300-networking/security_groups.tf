@@ -44,12 +44,19 @@ resource "oci_core_security_list" "private_db" {
   ingress_security_rules {
 
     # Allows all traffic from the private mgmt subnet
-
     source      = local.networking.cidr.subnets.private_mgmt
     source_type = "CIDR_BLOCK"
     protocol    = "all"
 
     description = "Allow all traffic from the private-mgmt subnet."
+  }
+  # TODO(Disable this temporary rule)
+  ingress_security_rules {
+    source      = "0.0.0.0/0"
+    source_type = "CIDR_BLOCK"
+    protocol    = "all"
+
+    description = "Allow all traffic from anywhere"
   }
 
   egress_security_rules {
@@ -60,7 +67,6 @@ resource "oci_core_security_list" "private_db" {
     protocol         = "all"
 
     description = "Allow all outbound traffic to the internet."
-
   }
 
   freeform_tags = local.tags.defaults
