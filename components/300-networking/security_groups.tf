@@ -1,7 +1,7 @@
 resource "oci_core_security_list" "private_mgmt" {
 
   compartment_id = local.values.compartments.production
-  vcn_id         = oci_core_vcn.mgmt.id
+  vcn_id         = oci_core_vcn.database.id
 
   display_name = "private-mgmt-sl"
 
@@ -49,14 +49,6 @@ resource "oci_core_security_list" "private_db" {
     protocol    = "all"
 
     description = "Allow all traffic from the private-mgmt subnet."
-  }
-  # TODO(Disable this temporary rule)
-  ingress_security_rules {
-    source      = "0.0.0.0/0"
-    source_type = "CIDR_BLOCK"
-    protocol    = "all"
-
-    description = "Allow all traffic from anywhere"
   }
 
   egress_security_rules {

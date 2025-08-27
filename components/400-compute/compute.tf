@@ -17,10 +17,8 @@ resource "oci_core_instance" "database" {
   }
 
   create_vnic_details {
-    # TODO(Change temporary subnet)
-    subnet_id = data.oci_core_subnets.public.subnets[0].id
-    # TODO(Change temporary ip assignment)
-    assign_public_ip       = true
+    subnet_id              = data.oci_core_subnets.private_database.subnets[0].id
+    assign_public_ip       = false
     private_ip             = local.instances.database.private_ip
     skip_source_dest_check = true
   }

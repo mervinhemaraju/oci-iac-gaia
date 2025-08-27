@@ -15,9 +15,8 @@ locals {
 
   instances = {
     database = {
-      name = "database"
-      # TODO(Change temporary IP)
-      private_ip = "10.18.50.10"
+      name       = "database"
+      private_ip = "10.18.20.10"
     }
   }
 

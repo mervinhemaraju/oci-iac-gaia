@@ -29,7 +29,7 @@ resource "oci_core_subnet" "private_mgmt" {
   compartment_id = local.values.compartments.production
 
   cidr_block = local.networking.cidr.subnets.private_mgmt
-  vcn_id     = oci_core_vcn.mgmt.id
+  vcn_id     = oci_core_vcn.database.id
 
   display_name               = "private-mgmt"
   dns_label                  = "privatemgmt"
@@ -42,26 +42,5 @@ resource "oci_core_subnet" "private_mgmt" {
 
   depends_on = [
     oci_core_vcn.mgmt
-  ]
-}
-
-# TODO(Remove temporary public subnet)
-resource "oci_core_subnet" "public" {
-
-  compartment_id = local.values.compartments.production
-
-  cidr_block = local.networking.cidr.subnets.public
-  vcn_id     = oci_core_vcn.database.id
-
-  display_name               = "public"
-  dns_label                  = "public"
-  prohibit_public_ip_on_vnic = false
-  security_list_ids          = [oci_core_security_list.private_db.id]
-  route_table_id             = oci_core_route_table.private_db.id
-
-  freeform_tags = local.tags.defaults
-
-  depends_on = [
-    oci_core_vcn.database
   ]
 }
