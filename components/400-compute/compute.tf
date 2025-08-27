@@ -44,12 +44,12 @@ resource "oci_core_instance" "database" {
 
   metadata = {
     ssh_authorized_keys = data.doppler_secrets.oci_creds.map.OCI_COMPUTE_KEY_PUBLIC
-    # # User data from YAML template file
-    # user_data = base64encode(templatefile("${path.module}/templates/cloud_init.yml", {
-    #   hostname           = each.value.name
-    #   authorized_ssh_key = data.doppler_secrets.oci_creds.map.OCI_COMPUTE_KEY_PUBLIC
-    #   github_pat         = data.doppler_secrets.apps_creds.map.GH_TERRAFORM_TOKEN
-    #   nginx_config_b64   = filebase64("${path.module}/templates/nginx.conf")
-    # }))
+    # User data from YAML template file
+    user_data = base64encode(templatefile("${path.module}/templates/cloud_init.yml", {
+      hostname               = local.instances.database.name
+      authorized_ssh_key     = data.doppler_secrets.oci_creds.map.OCI_COMPUTE_KEY_PUBLIC
+      github_pat             = data.doppler_secrets.apps_creds.map.GH_TERRAFORM_TOKEN
+      postgres_user_password = data.doppler_secrets.oci_creds.map.OCI_ZEUS_DATABASE_USER_PASSWORD
+    }))
   }
 }

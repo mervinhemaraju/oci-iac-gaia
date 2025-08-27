@@ -1,0 +1,87 @@
+#cloud-config
+# Cloud-init configuration for GitHub Actions Runner
+
+hostname: ${hostname}
+package_update: true
+package_upgrade: true
+
+users:
+  - name: opc
+    groups: sudo
+    shell: /bin/bash
+    homedir: /home/opc
+    sudo: "ALL=(ALL) NOPASSWD:ALL"
+    ssh_authorized_keys:
+      - "${authorized_ssh_key}"
+
+  - name: th3pl4gu3
+    groups: sudo,docker
+    shell: /bin/bash
+    homedir: /home/th3pl4gu3
+    sudo: "ALL=(ALL) NOPASSWD:ALL"
+    ssh_authorized_keys:
+      - "${authorized_ssh_key}"
+
+packages:
+  - curl
+  - wget
+  - jq
+  - openssl-devel
+  - git
+  - nginx
+  - tar
+  - python3-pip
+  - oci-utils
+  - python39-oci-cli
+  - postgresql
+  - postgresql-server
+  - mariadb
+  - mariadb-server
+
+write_files:
+  # Set up environment variables
+  - path: /etc/environment
+    content: |
+      GITHUB_PAT=${github_pat}
+      GITHUB_ORG=plagueworks-org
+      GITHUB_PERSONAL=mervinhemaraju
+    append: true
+    permissions: "0644"
+
+  # Setup Python aliases
+  - path: /etc/profile.d/python-aliases.sh
+    permissions: "0644"
+    content: |
+      #!/bin/bash
+      # System-wide Python aliases
+      alias python=python3
+      alias pip=pip3
+      export PATH=$PATH:/usr/local/bin
+runcmd:
+  # Disable the firewalld
+  - systemctl stop firewalld
+  - systemctl disable firewalld
+
+  # Automatic growth of volume
+  - /usr/libexec/oci-growfs -y
+
+  # Set folder owners
+  - chown -R th3pl4gu3:th3pl4gu3 /home/th3pl4gu3
+
+  # Set folder owners
+  - chown -R th3pl4gu3:th3pl4gu3 /home/th3pl4gu3
+
+  # Initialize the postgres database
+  - postgresql-setup --initdb
+
+  # Start and enable the postgres service
+  - sudo systemctl start postgresql
+  - sudo systemctl enable postgresql
+
+  # Set a password for the postgres user
+  - echo "postgres:${postgres_user_password}" | sudo chpasswd
+  - postgresql-setup --initdb
+
+  # Start and enable the mariadb service
+  - sudo systemctl start mariadb
+  - sudo systemctl enable mariadb

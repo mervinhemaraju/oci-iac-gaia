@@ -41,6 +41,6 @@ resource "oci_core_subnet" "private_mgmt" {
   freeform_tags = local.tags.defaults
 
   depends_on = [
-    oci_core_vcn.mgmt
+    oci_core_vcn.database
   ]
 }
