@@ -17,7 +17,7 @@ locals {
     database = {
       name = "database"
       # TODO(Change temporary IP)
-      private_ip = "10.50.10.10"
+      private_ip = "10.18.50.10"
     }
   }
 

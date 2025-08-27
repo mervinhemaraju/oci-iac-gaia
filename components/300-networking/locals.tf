@@ -23,7 +23,7 @@ locals {
         private_mgmt = "10.200.100.0/28"
         private_db   = "10.18.10.0/24"
         # TODO(Remove temporary subnet)
-        public = "10.50.10.0/24"
+        public = "10.18.50.0/24"
       }
     }
   }
