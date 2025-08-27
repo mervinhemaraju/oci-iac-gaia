@@ -21,7 +21,7 @@ data "oci_core_vcns" "database" {
 
 data "oci_core_subnets" "private_database" {
   compartment_id = local.values.compartments.production
-  display_name   = "private-database"
+  display_name   = "private-db"
   vcn_id         = data.oci_core_vcns.database.virtual_networks[0].id
 }
 
