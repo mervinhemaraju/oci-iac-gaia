@@ -50,7 +50,6 @@ resource "oci_core_security_list" "private_db" {
     description = "Allow all traffic from the private-mgmt subnet."
   }
 
-
   # Allows all traffic from the private web HELIOS subnet
   ingress_security_rules {
     source      = local.networking.cidr.subnets.private_web_helios
@@ -60,6 +59,14 @@ resource "oci_core_security_list" "private_db" {
     description = "Allow all traffic from the private-web HELIOS subnet."
   }
 
+  # Allows all traffic from the private k8 POSEIDON subnet
+  ingress_security_rules {
+    source      = local.networking.cidr.subnets.private_k8_poseidon
+    source_type = "CIDR_BLOCK"
+    protocol    = "all"
+
+    description = "Allow all traffic from the private-k8 POSEIDON subnet."
+  }
 
   # Allows all traffic on egress
   egress_security_rules {
