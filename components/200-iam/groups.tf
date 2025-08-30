@@ -1,7 +1,7 @@
 # Creates a new user group for drg admins and its memberships
 resource "oci_identity_group" "drg_admins" {
 
-  compartment_id = local.values.tenancy
+  compartment_id = local.values.compartments.root
   name           = "drg-admins"
   description    = "Dynamic Routing Gateway Admininistrators"
 
