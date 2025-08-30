@@ -7,8 +7,8 @@ resource "oci_identity_policy" "requestor_drg_management" {
   name           = "requestor-drg-management"
   statements = [
     "define group ${oci_identity_group.drg_admins.name} as ${oci_identity_group.drg_admins.id}",
-    "define group ${local.values.group.shelios_groups.vcn_admins.name} as ${local.values.groups.helios_groups.vcn_admins.id}",
-    "define tenancy acceptorVCN as ${local.values.compartments.root}",
+    "define group ${local.values.groups.helios_groups.vcn_admins.name} as ${local.values.groups.helios_groups.vcn_admins.id}",
+    "define tenancy acceptorVCN as ${local.values.compartments.root_helios}",
     "Allow group ${oci_identity_group.drg_admins.name} to manage virtual-network-family in tenancy",
     "Allow group ${local.values.groups.helios_groups.vcn_admins.name} to manage virtual-network-family in tenancy",
     "endorse group ${oci_identity_group.drg_admins.name} to manage drg-attachment in tenancy acceptorVCN",
