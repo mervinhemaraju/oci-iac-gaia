@@ -26,6 +26,10 @@ locals {
     }
   }
 
+  secrets = {
+    oci = "cloud-oci-creds"
+  }
+
   values = {
 
     tenancy = data.doppler_secrets.oci_creds.map.OCI_GAIA_TENANCY_OCID
