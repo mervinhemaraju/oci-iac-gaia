@@ -2,7 +2,7 @@
 resource "oci_identity_group" "drg_admins" {
 
   compartment_id = local.values.compartments.root
-  name           = "drg-admins"
+  name           = local.values.groups.drg_admins
   description    = "Dynamic Routing Gateway Admininistrators"
 
   freeform_tags = local.tags.defaults
