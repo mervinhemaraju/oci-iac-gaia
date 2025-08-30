@@ -19,8 +19,9 @@ locals {
         database = "10.18.0.0/16"
       }
       subnets = {
-        private_mgmt = "10.18.10.0/24"
-        private_db   = "10.18.20.0/24"
+        private_mgmt       = "10.18.10.0/24"
+        private_db         = "10.18.20.0/24"
+        private_web_helios = "10.16.20.0/24" # (This is found in the HELIOS account)
       }
     }
   }

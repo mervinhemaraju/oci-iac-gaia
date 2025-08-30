@@ -41,9 +41,8 @@ resource "oci_core_security_list" "private_db" {
   display_name = "private-db-sl"
 
 
+  # Allows all traffic from the private mgmt subnet
   ingress_security_rules {
-
-    # Allows all traffic from the private mgmt subnet
     source      = local.networking.cidr.subnets.private_mgmt
     source_type = "CIDR_BLOCK"
     protocol    = "all"
@@ -51,9 +50,19 @@ resource "oci_core_security_list" "private_db" {
     description = "Allow all traffic from the private-mgmt subnet."
   }
 
-  egress_security_rules {
 
-    # Allows all traffic on egress
+  # Allows all traffic from the private web HELIOS subnet
+  ingress_security_rules {
+    source      = local.networking.cidr.subnets.private_web_helios
+    source_type = "CIDR_BLOCK"
+    protocol    = "all"
+
+    description = "Allow all traffic from the private-web HELIOS subnet."
+  }
+
+
+  # Allows all traffic on egress
+  egress_security_rules {
     destination      = "0.0.0.0/0"
     destination_type = "CIDR_BLOCK"
     protocol         = "all"

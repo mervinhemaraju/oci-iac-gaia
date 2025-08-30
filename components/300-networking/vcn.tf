@@ -1,4 +1,4 @@
-# Create a virtual cloud network for database
+# The virtual cloud network 'Database' and its attachments
 resource "oci_core_vcn" "database" {
 
   compartment_id = local.values.compartments.production
@@ -12,4 +12,20 @@ resource "oci_core_vcn" "database" {
   ]
 
   freeform_tags = local.tags.defaults
+}
+
+# > The DRG attachment
+resource "oci_core_drg_attachment" "database" {
+
+  drg_id = oci_core_drg.database.id
+
+  display_name = "database-drg-attachment"
+
+  freeform_tags = local.tags.defaults
+
+  network_details {
+    id             = oci_core_vcn.database.id
+    type           = "VCN"
+    vcn_route_type = "SUBNET_CIDRS"
+  }
 }
