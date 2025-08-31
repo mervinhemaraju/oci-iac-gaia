@@ -1,6 +1,6 @@
 # Create a remote peering connection
 resource "oci_core_remote_peering_connection" "database" {
-  compartment_id = local.values.compartments.root
+  compartment_id = local.values.compartments.production
   drg_id         = oci_core_drg.database.id
 
   display_name     = "database-rpc"
