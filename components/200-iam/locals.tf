@@ -21,16 +21,25 @@ locals {
       production = data.doppler_secrets.oci_creds.map.OCI_GAIA_COMPARTMENT_PRODUCTION_ID
       root       = data.doppler_secrets.oci_creds.map.OCI_GAIA_COMPARTMENT_ROOT_ID
 
-      root_helios = data.doppler_secrets.oci_creds.map.OCI_HELIOS_COMPARTMENT_ROOT_ID
+      root_helios   = data.doppler_secrets.oci_creds.map.OCI_HELIOS_COMPARTMENT_ROOT_ID
+      root_poseidon = data.doppler_secrets.oci_creds.map.OCI_POSEIDON_COMPARTMENT_ROOT_ID
     }
 
     groups = {
       drg_admins     = "drg-admins"
       administrators = "Administrators"
+
       helios_groups = {
         vcn_admins = {
           name = "vcn-admins"
           id   = jsondecode(data.doppler_secrets.oci_creds.map.OCI_HELIOS_GROUPS)["vcn-admins"]
+        }
+      }
+
+      poseidon_groups = {
+        vcn_admins = {
+          name = "vcn-admins"
+          id   = jsondecode(data.doppler_secrets.oci_creds.map.OCI_POSEIDON_GROUPS)["vcn-admins"]
         }
       }
     }
