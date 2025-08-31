@@ -49,7 +49,8 @@ resource "oci_core_instance" "database" {
       hostname               = local.instances.database.name
       authorized_ssh_key     = data.doppler_secrets.oci_creds.map.OCI_COMPUTE_KEY_PUBLIC
       github_pat             = data.doppler_secrets.apps_creds.map.GH_TERRAFORM_TOKEN
-      postgres_user_password = data.doppler_secrets.oci_creds.map.OCI_ZEUS_DATABASE_USER_PASSWORD
+      postgres_user_password = data.doppler_secrets.oci_creds.map.OCI_POSEIDON_DATABASE_USER_PASSWORD
+      mariadb_root_password  = data.doppler_secrets.oci_creds.map.OCI_POSEIDON_DATABASE_USER_PASSWORD
     }))
   }
 }
