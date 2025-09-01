@@ -64,8 +64,10 @@ write_files:
     permissions: "0644"
     content: |
       # TYPE  DATABASE        USER            ADDRESS                 METHOD
-      # Local connections
-      local   all             postgres                                scram-sha-256
+      # Allow postgres user to connect locally without password (admin tasks)
+      local   all             postgres                                peer
+
+      # Local connections for other users require password
       local   all             th3pl4gu3                               scram-sha-256
       local   all             all                                     scram-sha-256
 
@@ -107,22 +109,22 @@ runcmd:
   # Set password encryption method
   - echo "password_encryption = scram-sha-256" >> /var/lib/pgsql/data/postgresql.conf
 
-  # Now start and enable PostgreSQL
+  # Enable and start PostgreSQL
   - systemctl enable postgresql
   - systemctl start postgresql
 
-  # Start and enable MariaDB
+  # Enable and start MariaDB
   - systemctl enable mariadb
   - systemctl start mariadb
 
-  # Wait for both services to be ready
+  # Wait for services to be ready
   - sleep 5
 
   # PostgreSQL: Set passwords and create user
   - sudo -u postgres psql -c "ALTER USER postgres PASSWORD '${postgres_user_password}';"
   - sudo -u postgres psql -c "CREATE USER th3pl4gu3 WITH PASSWORD '${postgres_user_password}' SUPERUSER CREATEDB CREATEROLE;"
 
-  # MariaDB: Secure installation
+  # MariaDB: Secure installation (your existing MariaDB commands)
   - |
     mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${mariadb_root_password}';"
     mysql -u root -p'${mariadb_root_password}' -e "DELETE FROM mysql.user WHERE User='';"
