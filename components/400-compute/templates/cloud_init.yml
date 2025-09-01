@@ -57,6 +57,32 @@ write_files:
       alias python=python3
       alias pip=pip3
       export PATH=$PATH:/usr/local/bin
+
+  # Setup the postgres host based authentication config
+  - path: /tmp/pg_hba_secure.conf
+    owner: root:root
+    permissions: "0644"
+    content: |
+      # TYPE  DATABASE        USER            ADDRESS                 METHOD
+      # Local connections
+      local   all             postgres                                scram-sha-256
+      local   all             th3pl4gu3                               scram-sha-256
+      local   all             all                                     scram-sha-256
+
+      # IPv4 local connections
+      host    all             postgres        127.0.0.1/32            scram-sha-256
+      host    all             th3pl4gu3       127.0.0.1/32            scram-sha-256
+      host    all             all             127.0.0.1/32            scram-sha-256
+
+      # IPv6 local connections
+      host    all             postgres        ::1/128                 scram-sha-256
+      host    all             th3pl4gu3       ::1/128                 scram-sha-256
+      host    all             all             ::1/128                 scram-sha-256
+
+      # Reject all other connections
+      host    all             all             0.0.0.0/0               reject
+      host    all             all             ::/0                    reject
+
 runcmd:
   # Disable the firewalld
   - systemctl stop firewalld
@@ -71,23 +97,32 @@ runcmd:
   # Set folder owners
   - chown -R th3pl4gu3:th3pl4gu3 /home/th3pl4gu3
 
-  # Initialize the postgres database
+  # Initialize PostgreSQL database (only once!)
   - postgresql-setup --initdb
 
-  # Start and enable the postgres service
-  - sudo systemctl start postgresql
-  - sudo systemctl enable postgresql
+  # Apply secure configuration BEFORE starting the service
+  - cp /tmp/pg_hba_secure.conf /var/lib/pgsql/data/pg_hba.conf
+  - chown postgres:postgres /var/lib/pgsql/data/pg_hba.conf
 
-  # Set a password for the postgres user
-  - echo "postgres:${postgres_user_password}" | sudo chpasswd
-  - postgresql-setup --initdb
+  # Set password encryption method
+  - echo "password_encryption = scram-sha-256" >> /var/lib/pgsql/data/postgresql.conf
 
-  # Start and enable the mariadb service
-  - sudo systemctl start mariadb
-  - sudo systemctl enable mariadb
+  # Now start and enable PostgreSQL
+  - systemctl enable postgresql
+  - systemctl start postgresql
 
-  # MariaDB configuration
-  # Set MariaDB root password and secure installation
+  # Start and enable MariaDB
+  - systemctl enable mariadb
+  - systemctl start mariadb
+
+  # Wait for both services to be ready
+  - sleep 5
+
+  # PostgreSQL: Set passwords and create user
+  - sudo -u postgres psql -c "ALTER USER postgres PASSWORD '${postgres_user_password}';"
+  - sudo -u postgres psql -c "CREATE USER th3pl4gu3 WITH PASSWORD '${postgres_user_password}' SUPERUSER CREATEDB CREATEROLE;"
+
+  # MariaDB: Secure installation
   - |
     mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${mariadb_root_password}';"
     mysql -u root -p'${mariadb_root_password}' -e "DELETE FROM mysql.user WHERE User='';"
@@ -99,3 +134,6 @@ runcmd:
     mysql -u root -p'${mariadb_root_password}' -e "CREATE USER 'th3pl4gu3'@'%' IDENTIFIED BY '${mariadb_root_password}';"
     mysql -u root -p'${mariadb_root_password}' -e "GRANT ALL PRIVILEGES ON *.* TO 'th3pl4gu3'@'%' WITH GRANT OPTION;"
     mysql -u root -p'${mariadb_root_password}' -e "FLUSH PRIVILEGES;"
+
+  # Clean up temporary files
+  - rm -f /tmp/pg_hba_secure.conf
