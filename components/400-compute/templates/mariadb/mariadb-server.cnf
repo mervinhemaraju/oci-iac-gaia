@@ -1,18 +1,7 @@
-#
-# These groups are read by MariaDB server.
-# Use it for options that only the server (but not clients) should see
-#
-# See the examples of server my.cnf files in /usr/share/mysql/
-#
-
 # this is read by the standalone daemon and embedded servers
 [server]
 
 # this is only for the mysqld standalone daemon
-# Settings user and group are ignored when systemd is used.
-# If you need to run mysqld under a different user or group,
-# customize your systemd unit file for mysqld/mariadb according to the
-# instructions in http://fedoraproject.org/wiki/Systemd
 [mysqld]
 datadir=/var/lib/mysql
 socket=/var/lib/mysql/mysql.sock
@@ -30,17 +19,6 @@ bind-address=0.0.0.0
 # * Galera-related settings
 #
 [galera]
-# Mandatory settings
-#wsrep_on=ON
-#wsrep_provider=
-#wsrep_cluster_address=
-#binlog_format=row
-#default_storage_engine=InnoDB
-#innodb_autoinc_lock_mode=2
-#
-# Optional setting
-#wsrep_slave_threads=1
-#innodb_flush_log_at_trx_commit=0
 
 # this is only for embedded server
 [embedded]
