@@ -62,10 +62,10 @@ resource "oci_core_instance" "database" {
       }))
 
       # File for the postgres conf
-      postgres_b64 = base64encode(templatefile("${path.module}/templates/postgres/postgres.conf"))
+      postgres_b64 = filebase64("${path.module}/templates/postgres/postgres.conf")
 
       # File for the mariadb conf
-      mariadb_b64 = base64encode(templatefile("${path.module}/templates/mariadb/mariadb-server.cnf"))
+      mariadb_b64 = filebase64("${path.module}/templates/mariadb/mariadb-server.cnf")
 
     }))
   }
