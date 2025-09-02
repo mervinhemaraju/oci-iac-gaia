@@ -51,6 +51,22 @@ resource "oci_core_instance" "database" {
       github_pat             = data.doppler_secrets.apps_creds.map.GH_TERRAFORM_TOKEN
       postgres_user_password = data.doppler_secrets.oci_creds.map.OCI_POSEIDON_DATABASE_USER_PASSWORD
       mariadb_root_password  = data.doppler_secrets.oci_creds.map.OCI_POSEIDON_DATABASE_USER_PASSWORD
+
+      # File for the postgres hba conf
+      pg_hba_b64 = base64encode(templatefile("${path.module}/templates/postgres/pg_hba.conf", {
+        # Subnets fore remote connections in postgres
+        poseidon_private_k8  = local.networking.subnets.poseidon_private_k8
+        helios_private_web   = local.networking.subnets.helios_private_web
+        zeus_private_runners = local.networking.subnets.zeus_private_runners
+        private_db           = local.networking.subnets.private_db
+      }))
+
+      # File for the postgres conf
+      postgres_b64 = base64encode(templatefile("${path.module}/templates/postgres/postgres.conf"))
+
+      # File for the mariadb conf
+      mariadb_b64 = base64encode(templatefile("${path.module}/templates/mariadb/mariadb-server.cnf"))
+
     }))
   }
 }

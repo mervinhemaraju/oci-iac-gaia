@@ -12,6 +12,16 @@ locals {
     }
   }
 
+  networking = {
+
+    subnets = {
+      poseidon_private_k8  = "10.15.20.0/24"
+      helios_private_web   = "10.16.20.0/24"
+      zeus_private_runners = "10.17.20.0/24"
+      private_db           = "10.18.20.0/24"
+    }
+  }
+
 
   instances = {
     database = {

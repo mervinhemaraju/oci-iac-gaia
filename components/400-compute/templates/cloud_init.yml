@@ -62,28 +62,22 @@ write_files:
   - path: /tmp/pg_hba_secure.conf
     owner: root:root
     permissions: "0644"
-    content: |
-      # TYPE  DATABASE        USER            ADDRESS                 METHOD
-      # Allow postgres user to connect locally without password (admin tasks)
-      local   all             postgres                                peer
+    encoding: b64
+    content: ${pg_hba_b64}
 
-      # Local connections for other users require password
-      local   all             th3pl4gu3                               scram-sha-256
-      local   all             all                                     scram-sha-256
+  # Setup the postgres config file
+  - path: /tmp/postgres_secure.conf
+    owner: root:root
+    permissions: "0644"
+    encoding: b64
+    content: ${postgres_b64}
 
-      # IPv4 local connections
-      host    all             postgres        127.0.0.1/32            scram-sha-256
-      host    all             th3pl4gu3       127.0.0.1/32            scram-sha-256
-      host    all             all             127.0.0.1/32            scram-sha-256
-
-      # IPv6 local connections
-      host    all             postgres        ::1/128                 scram-sha-256
-      host    all             th3pl4gu3       ::1/128                 scram-sha-256
-      host    all             all             ::1/128                 scram-sha-256
-
-      # Reject all other connections
-      host    all             all             0.0.0.0/0               reject
-      host    all             all             ::/0                    reject
+  # Setup the mariadb config file
+  - path: /etc/my.cnf.d/mariadb-server.cnf
+    owner: root:root
+    permissions: "0644"
+    encoding: b64
+    content: ${mariadb_b64}
 
 runcmd:
   # Disable the firewalld
@@ -102,12 +96,11 @@ runcmd:
   # Initialize PostgreSQL database (only once!)
   - postgresql-setup --initdb
 
-  # Apply secure configuration BEFORE starting the service
+  # Apply secure configuration for postgres BEFORE starting the service
   - cp /tmp/pg_hba_secure.conf /var/lib/pgsql/data/pg_hba.conf
+  - cp /tmp/postgres_secure.conf /var/lib/pgsql/data/postgres.conf
   - chown postgres:postgres /var/lib/pgsql/data/pg_hba.conf
-
-  # Set password encryption method
-  - echo "password_encryption = scram-sha-256" >> /var/lib/pgsql/data/postgresql.conf
+  - chown postgres:postgres /var/lib/pgsql/data/postgres.conf
 
   # Enable and start PostgreSQL
   - systemctl enable postgresql
@@ -139,3 +132,4 @@ runcmd:
 
   # Clean up temporary files
   - rm -f /tmp/pg_hba_secure.conf
+  - rm -f /tmp/postgres_secure.conf
