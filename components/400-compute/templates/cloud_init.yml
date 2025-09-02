@@ -66,7 +66,7 @@ write_files:
     content: ${pg_hba_b64}
 
   # Setup the postgres config file
-  - path: /tmp/postgres_secure.conf
+  - path: /tmp/postgresql_secure.conf
     owner: root:root
     permissions: "0644"
     encoding: b64
@@ -98,9 +98,9 @@ runcmd:
 
   # Apply secure configuration for postgres BEFORE starting the service
   - cp /tmp/pg_hba_secure.conf /var/lib/pgsql/data/pg_hba.conf
-  - cp /tmp/postgres_secure.conf /var/lib/pgsql/data/postgres.conf
+  - cp /tmp/postgresql_secure.conf /var/lib/pgsql/data/postgresql.conf
   - chown postgres:postgres /var/lib/pgsql/data/pg_hba.conf
-  - chown postgres:postgres /var/lib/pgsql/data/postgres.conf
+  - chown postgres:postgres /var/lib/pgsql/data/postgresql.conf
 
   # Enable and start PostgreSQL
   - systemctl enable postgresql
@@ -113,9 +113,13 @@ runcmd:
   # Wait for services to be ready
   - sleep 5
 
-  # PostgreSQL: Set passwords and create user
+  # PostgreSQL: Set passwords and create user with proper encryption
   - sudo -u postgres psql -c "ALTER USER postgres PASSWORD '${postgres_user_password}';"
   - sudo -u postgres psql -c "CREATE USER th3pl4gu3 WITH PASSWORD '${postgres_user_password}' SUPERUSER CREATEDB CREATEROLE;"
+
+  # Restart PostgreSQL to ensure all configurations are applied
+  - systemctl restart postgresql
+  - sleep 5
 
   # MariaDB: Secure installation (your existing MariaDB commands)
   - |
