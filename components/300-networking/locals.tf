@@ -28,7 +28,7 @@ locals {
     }
 
     gateways = {
-      rpc_id_poseidon = jsondecode(data.doppler_secrets.oci_creds.map.OCI_POSEIDON_CONNECTIONS)["rpc"]["id"]
+      rpc_id_poseidon = jsondecode(data.doppler_secrets.oci_creds.map.OCI_POSEIDON_CONNECTIONS)["rpc"]["gaia_database_id"]
     }
   }
 
