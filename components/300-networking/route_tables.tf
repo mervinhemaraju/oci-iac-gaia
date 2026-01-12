@@ -35,12 +35,21 @@ resource "oci_core_route_table" "private_db" {
     destination_type = "CIDR_BLOCK"
   }
 
-  # Route to the DRG gateway for OCI ZEUS connection
+  # # Route to the DRG gateway for OCI ZEUS connection
+  # route_rules {
+
+  #   network_entity_id = oci_core_drg.database.id
+
+  #   description      = "Route to the Zeus K8 tenant's VCN (VCN Peering to ZEUS Account)"
+  #   destination      = local.networking.cidr.subnets.private_k8_zeus
+  #   destination_type = "CIDR_BLOCK"
+  # }
+
+  # Route to ZEUS via LPG (same region) - REPLACE the existing DRG rule for Zeus
   route_rules {
+    network_entity_id = oci_core_local_peering_gateway.to_zeus.id # Use LPG, not DRG
 
-    network_entity_id = oci_core_drg.database.id
-
-    description      = "Route to the Zeus K8 tenant's VCN (VCN Peering to ZEUS Account)"
+    description      = "Route to the Zeus K8 tenant's VCN (Local VCN Peering to ZEUS Account)"
     destination      = local.networking.cidr.subnets.private_k8_zeus
     destination_type = "CIDR_BLOCK"
   }

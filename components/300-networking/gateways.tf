@@ -18,3 +18,15 @@ resource "oci_core_drg" "database" {
 
   freeform_tags = local.tags.defaults
 }
+
+# Create a Local Peering Gateway for GAIA -> ZEUS (same region)
+resource "oci_core_local_peering_gateway" "to_zeus_prod" {
+  compartment_id = local.values.compartments.production
+  vcn_id         = oci_core_vcn.database.id
+
+  display_name = "lpg-to-zeus-prod"
+
+  # Don't set peer_id here - Zeus will be the requestor
+
+  freeform_tags = local.tags.defaults
+}
