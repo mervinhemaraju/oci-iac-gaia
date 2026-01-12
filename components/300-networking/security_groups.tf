@@ -68,6 +68,15 @@ resource "oci_core_security_list" "private_db" {
     description = "Allow all traffic from the private-k8 POSEIDON subnet."
   }
 
+  # Allows all traffic from the private k8 ZEUS subnet
+  ingress_security_rules {
+    source      = local.networking.cidr.subnets.private_k8_zeus
+    source_type = "CIDR_BLOCK"
+    protocol    = "all"
+
+    description = "Allow all traffic from the private-k8 ZEUS subnet."
+  }
+
   # Allows all traffic on egress
   egress_security_rules {
     destination      = "0.0.0.0/0"
