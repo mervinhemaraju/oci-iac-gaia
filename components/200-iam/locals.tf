@@ -23,6 +23,7 @@ locals {
 
       root_helios   = data.doppler_secrets.oci_creds.map.OCI_HELIOS_COMPARTMENT_ROOT_ID
       root_poseidon = data.doppler_secrets.oci_creds.map.OCI_POSEIDON_COMPARTMENT_ROOT_ID
+      root_zeus     = data.doppler_secrets.oci_creds.map.OCI_ZEUS_COMPARTMENT_ROOT_ID
     }
 
     groups = {
@@ -40,6 +41,13 @@ locals {
         vcn_admins = {
           name = "vcn-admins"
           id   = jsondecode(data.doppler_secrets.oci_creds.map.OCI_POSEIDON_GROUPS)["vcn-admins"]
+        }
+      }
+
+      zeus_groups = {
+        vcn_admins = {
+          name = "vcn-admins"
+          id   = jsondecode(data.doppler_secrets.oci_creds.map.OCI_ZEUS_GROUPS)["vcn-admins"]
         }
       }
     }
