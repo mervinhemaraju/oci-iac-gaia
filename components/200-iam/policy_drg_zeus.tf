@@ -23,6 +23,10 @@ resource "oci_identity_policy" "zeus_cross_conection_statements" {
     # Admit
     "admit group ${local.values.groups.zeus_groups.vcn_admins.name} of tenancy zeusTenancy to manage drg in tenancy",
     "admit group ${local.values.groups.zeus_groups.vcn_admins.name} of tenancy zeusTenancy to manage local-peering-from in tenancy",
+    "admit group ${local.values.groups.zeus_groups.vcn_admins.name} of tenancy zeusTenancy to manage virtual-network-family in tenancy",
+
+    # Explicitly add associate permission for clarity
+    "admit group ${local.values.groups.zeus_groups.vcn_admins.name} of tenancy zeusTenancy to associate local-peering-gateways in tenancy",
   ]
 
   freeform_tags = local.tags.defaults
