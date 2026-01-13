@@ -29,23 +29,21 @@ resource "oci_identity_policy" "zeus_cross_conection_statements" {
     # "admit group ${local.values.groups.zeus_groups.vcn_admins.name} of tenancy zeusTenancy to associate local-peering-gateways in tenancy",
 
     # Definitions
-    "define group ${oci_identity_group.drg_admins.name} as ${oci_identity_group.drg_admins.id}",
-    "define group ${local.values.groups.zeus_groups.vcn_admins.name} as ${local.values.groups.zeus_groups.vcn_admins.id}",
+    "define group ZeusVcnAdmins as ${local.values.groups.zeus_groups.vcn_admins.id}",
     "define tenancy zeusTenancy as ${local.values.compartments.root_zeus}",
 
-    # --- ALLOW (Local Gaia admins managing Gaia resources) ---
+    # 1. Allow (Local Gaia admins managing Gaia resources)
     "allow group ${oci_identity_group.drg_admins.name} to manage virtual-network-family in tenancy",
     "allow group ${oci_identity_group.drg_admins.name} to manage local-peering-gateways in tenancy",
 
-    # --- ENDORSE (Local Gaia admins going to Zeus) ---
+    # 2. Endorse (Local Gaia admins going to Zeus)
     "endorse group ${oci_identity_group.drg_admins.name} to manage drg-attachment in tenancy zeusTenancy",
 
-    # --- ADMIT (Remote Zeus admins coming into Gaia) ---
-    # This is the critical block for the LPG connection to succeed
-    "admit group ${local.values.groups.zeus_groups.vcn_admins.name} of tenancy zeusTenancy to manage virtual-network-family in tenancy",
-    "admit group ${local.values.groups.zeus_groups.vcn_admins.name} of tenancy zeusTenancy to manage local-peering-from in tenancy",
-    "admit group ${local.values.groups.zeus_groups.vcn_admins.name} of tenancy zeusTenancy to associate local-peering-gateways in tenancy",
-    "admit group ${local.values.groups.zeus_groups.vcn_admins.name} of tenancy zeusTenancy to manage drg in tenancy"
+    # 3. Admit (Remote Zeus admins coming into Gaia)
+    # CHANGE: Replaced 'associate' with 'manage'
+    "admit group ZeusVcnAdmins of tenancy zeusTenancy to manage virtual-network-family in tenancy",
+    "admit group ZeusVcnAdmins of tenancy zeusTenancy to manage local-peering-from in tenancy",
+    "admit group ZeusVcnAdmins of tenancy zeusTenancy to manage drg in tenancy"
 
   ]
 
