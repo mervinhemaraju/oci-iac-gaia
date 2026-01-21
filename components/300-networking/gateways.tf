@@ -32,11 +32,11 @@ resource "oci_core_local_peering_gateway" "to_zeus_prod" {
 }
 
 # Create a Local Peering Gateway for GAIA -> HELIOS (same region)
-resource "oci_core_local_peering_gateway" "to_helios_prod" {
+resource "oci_core_local_peering_gateway" "to_helios_dev" {
   compartment_id = local.values.compartments.production
   vcn_id         = oci_core_vcn.database.id
 
-  display_name = "lpg-to-helios-prod"
+  display_name = "lpg-to-helios-dev"
 
   # Don't set peer_id here - Helios will be the requestor
 
