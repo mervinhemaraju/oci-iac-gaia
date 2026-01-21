@@ -10,7 +10,8 @@ resource "doppler_secret" "database_connection_details" {
         "id" : oci_core_drg.database.id
       },
       "lpg" : {
-        "zeus_prod_id" : oci_core_local_peering_gateway.to_zeus_prod.id
+        "zeus_prod_id" : oci_core_local_peering_gateway.to_zeus_prod.id,
+        "helios_prod_id" : oci_core_local_peering_gateway.to_helios_prod.id
       }
     }
   )

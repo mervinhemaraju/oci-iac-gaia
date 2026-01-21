@@ -52,7 +52,7 @@ resource "oci_core_security_list" "private_db" {
 
   # Allows all traffic from the private web HELIOS subnet
   ingress_security_rules {
-    source      = local.networking.cidr.subnets.private_web_helios
+    source      = local.networking.cidr.subnets.private_k8_helios
     source_type = "CIDR_BLOCK"
     protocol    = "all"
 

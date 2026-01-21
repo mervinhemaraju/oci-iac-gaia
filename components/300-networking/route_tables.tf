@@ -15,15 +15,15 @@ resource "oci_core_route_table" "private_db" {
     destination_type = "CIDR_BLOCK"
   }
 
-  # Route to the DRG gateway for OCI Helios connection
-  route_rules {
+  # # Route to the DRG gateway for OCI Helios connection
+  # route_rules {
 
-    network_entity_id = oci_core_drg.database.id
+  #   network_entity_id = oci_core_drg.database.id
 
-    description      = "Route to the Helios Web tenant's VCN (VCN Peering to HELIOS Account)"
-    destination      = local.networking.cidr.subnets.private_web_helios
-    destination_type = "CIDR_BLOCK"
-  }
+  #   description      = "Route to the Helios Web tenant's VCN (VCN Peering to HELIOS Account)"
+  #   destination      = local.networking.cidr.subnets.private_web_helios
+  #   destination_type = "CIDR_BLOCK"
+  # }
 
   # Route to the DRG gateway for OCI Poseidon connection
   route_rules {
@@ -35,22 +35,22 @@ resource "oci_core_route_table" "private_db" {
     destination_type = "CIDR_BLOCK"
   }
 
-  # # Route to the DRG gateway for OCI ZEUS connection
-  # route_rules {
-
-  #   network_entity_id = oci_core_drg.database.id
-
-  #   description      = "Route to the Zeus K8 tenant's VCN (VCN Peering to ZEUS Account)"
-  #   destination      = local.networking.cidr.subnets.private_k8_zeus
-  #   destination_type = "CIDR_BLOCK"
-  # }
-
   # Route to ZEUS via LPG (same region) - REPLACE the existing DRG rule for Zeus
   route_rules {
     network_entity_id = oci_core_local_peering_gateway.to_zeus_prod.id # Use LPG, not DRG
 
     description      = "Route to the Zeus K8 tenant's VCN (Local VCN Peering to ZEUS Account)"
     destination      = local.networking.cidr.subnets.private_k8_zeus
+    destination_type = "CIDR_BLOCK"
+  }
+
+
+  # Route to HELIOS via LPG (same region) - REPLACE the existing DRG rule for Helios
+  route_rules {
+    network_entity_id = oci_core_local_peering_gateway.to_helios_prod.id # Use LPG, not DRG
+
+    description      = "Route to the Helios K8 tenant's VCN (Local VCN Peering to Helios Account)"
+    destination      = local.networking.cidr.subnets.private_k8_helios
     destination_type = "CIDR_BLOCK"
   }
 

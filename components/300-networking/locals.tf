@@ -21,7 +21,7 @@ locals {
       subnets = {
         private_mgmt        = "10.18.10.0/24"
         private_db          = "10.18.20.0/24"
-        private_web_helios  = "10.16.20.0/24" # (This is found in the HELIOS account)
+        private_k8_helios   = "10.16.31.0/24" # (This is found in the HELIOS account)
         private_k8_poseidon = "10.15.31.0/24" # (This is found in the POSEIDON account)
         private_k8_zeus     = "10.17.31.0/24" # (This is found in the ZEUS account)
       }
