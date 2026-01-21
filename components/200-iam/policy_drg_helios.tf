@@ -4,7 +4,7 @@ resource "oci_identity_policy" "helios_cross_conection_statements" {
 
   compartment_id = local.values.compartments.root
   name           = "helios-cross-connection-statements"
-  description    = "Allow the requestor to manage DRG and RPC in this tenancy and account HELIOS tenancy."
+  description    = "Allow the requestor to manage DRG and RPC in this tenancy and account helios tenancy."
 
   statements = [
     # Definitions
@@ -15,10 +15,20 @@ resource "oci_identity_policy" "helios_cross_conection_statements" {
     # Allow
     "Allow group ${oci_identity_group.drg_admins.name} to manage virtual-network-family in tenancy",
     "Allow group ${local.values.groups.helios_groups.vcn_admins.name} to manage virtual-network-family in tenancy",
+    "allow group ${oci_identity_group.drg_admins.name} to manage local-peering-gateways in tenancy",
+
     # Endorse
     "endorse group ${oci_identity_group.drg_admins.name} to manage drg-attachment in tenancy heliosTenancy",
+
     # Admit
-    "admit group ${local.values.groups.helios_groups.vcn_admins.name} of tenancy heliosTenancy to manage drg in tenancy"
+    "admit group ${local.values.groups.helios_groups.vcn_admins.name} of tenancy heliosTenancy to manage drg in tenancy",
+    "admit group ${local.values.groups.helios_groups.vcn_admins.name} of tenancy heliosTenancy to manage virtual-network-family in tenancy",
+    "admit group ${local.values.groups.helios_groups.vcn_admins.name} of tenancy heliosTenancy to manage local-peering-from in tenancy",
+    "admit group ${local.values.groups.helios_groups.vcn_admins.name} of tenancy heliosTenancy to manage local-peering-to in tenancy",
+
+    # Explicitly add associate permission for clarity
+    # "admit group ${local.values.groups.helios_groups.vcn_admins.name} of tenancy heliosTenancy to associate local-peering-gateways in tenancy",
+    "admit group ${local.values.groups.helios_groups.vcn_admins.name} of tenancy heliosTenancy to associate local-peering-gateways in tenancy heliosTenancy with local-peering-gateways in tenancy"
   ]
 
   freeform_tags = local.tags.defaults
